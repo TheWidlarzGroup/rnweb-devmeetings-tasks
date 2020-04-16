@@ -11,11 +11,11 @@ import { title, subtitle } from "common/app.json";
 import { useToDo } from "common/useTodo";
 import { commonStyles, theme } from "common/styles";
 
-const List = () => {
+const List = ({ goToDetails }) => {
   const [todos, addTodo, removeTodo, newValue, setNewValue] = useToDo();
 
   return (
-    <View>
+    <View style={styles.mainContainer}>
       <Text>{title}</Text>
       <Text>{subtitle}</Text>
       <View style={styles.inputWrapper}>
@@ -38,6 +38,9 @@ const List = () => {
         renderItem={({ item }) => (
           <View style={styles.todoContainer}>
             <Text>{item.value}</Text>
+            <TouchableOpacity onPress={() => goToDetails(item)}>
+              <Text>Details</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => removeTodo(item.id)}>
               <Text>Delete todo</Text>
             </TouchableOpacity>

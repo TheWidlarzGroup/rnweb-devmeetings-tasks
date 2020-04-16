@@ -1,9 +1,10 @@
 import "./index.css";
-import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { AppRegistry } from "react-native";
+import Router from "common/Router";
+import { createBrowserApp } from "@react-navigation/web";
 
-AppRegistry.registerComponent("name", () => App);
+AppRegistry.registerComponent("name", () => createBrowserApp(Router));
 AppRegistry.runApplication("name", {
   rootTag: document.getElementById("root"),
 });

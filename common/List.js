@@ -10,9 +10,18 @@ import {
 import { title, subtitle } from "common/app.json";
 import { useToDo } from "common/useTodo";
 import { commonStyles, theme } from "common/styles";
+import Modal from "./components/Modal";
 
-const List = ({ goToDetails }) => {
-  const [todos, addTodo, removeTodo, newValue, setNewValue] = useToDo();
+const List = ({ goToDetails, saveTodos, todoHandler }) => {
+  const [
+    todos,
+    addTodo,
+    removeTodo,
+    newValue,
+    setNewValue,
+    modal,
+    closeModal,
+  ] = todoHandler;
 
   return (
     <View style={styles.mainContainer}>
@@ -34,11 +43,16 @@ const List = ({ goToDetails }) => {
       <FlatList
         contentContainerStyle={styles.todosWrapper}
         data={todos}
-        keyExtractor={(_, index) => index}
+        keyExtractor={({ id }) => id}
         renderItem={({ item }) => (
           <View style={styles.todoContainer}>
             <Text>{item.value}</Text>
-            <TouchableOpacity onPress={() => goToDetails(item)}>
+            <TouchableOpacity
+              onPress={() => {
+                goToDetails(item);
+                // saveTodos(todos);
+              }}
+            >
               <Text>Details</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => removeTodo(item.id)}>
@@ -56,6 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: "center",
+    marginTop: 80,
   },
   inputWrapper: {
     ...commonStyles.inputWrapper,
